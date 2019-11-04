@@ -40,5 +40,10 @@ module.exports = {
             // 配置 vue 文件
             { test: /\.vue$/, use: 'vue-loader' }
         ]
+    },
+    resolve:{
+        alias:{
+            'vue':'vue/dist/vue.js'
+        }
     }
 }
