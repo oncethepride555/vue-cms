@@ -1,4 +1,5 @@
 <template>
+<!-- 首页点击新闻咨询后，进入的页面 -->
   <div class="newsList-container">
     <ul class="mui-table-view">
       <li class="mui-table-view-cell mui-media" v-for="item in newsList" :key="item.id">

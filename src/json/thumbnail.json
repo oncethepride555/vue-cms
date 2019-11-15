@@ -1,0 +1,22 @@
+{
+    "status":0,
+    "message":[
+        {
+            "src":"images/menu1.png"
+        },
+        {
+            "src":"images/menu2.png"
+        },
+        {
+            "src":"images/menu3.png"
+        },
+        {
+            "src":"images/menu4.png"
+        },
+        {
+            "src":"images/menu5.png"
+        },{
+            "src":"images/menu6.png"
+        }
+    ]
+}

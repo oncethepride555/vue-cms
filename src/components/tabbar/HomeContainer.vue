@@ -1,47 +1,44 @@
 <template>
+  <!-- tabbar 首页组件 -->
   <div>
     <!-- 轮播图区域 -->
-    <mt-swipe :auto="4000">
-      <mt-swipe-item v-for="item in lunbotuList" :key="item.image">
-        <img :src="item.image" alt />
-      </mt-swipe-item>
-    </mt-swipe>
+    <lunbotu-box :lunbotuList="this.lunbotuList" :isfull="true"></lunbotu-box>
 
     <!-- 六宫格 -->
     <ul class="mui-table-view mui-grid-view mui-grid-9">
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
         <router-link to="/home/newslist">
-          <img src="../../images/menu1.png" alt />
+          <img src="../../images/menu1.png" />
           <div class="mui-media-body">新闻咨询</div>
         </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-        <a href="#">
-          <img src="../../images/menu2.png" alt />
+        <router-link to="/home/picshare">
+          <img src="../../images/menu2.png" />
           <div class="mui-media-body">图片分享</div>
-        </a>
+        </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-        <a href="#">
-          <img src="../../images/menu3.png" alt />
+        <router-link to="/home/shopping">
+          <img src="../../images/menu3.png" />
           <div class="mui-media-body">商品购买</div>
-        </a>
+        </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
         <a href="#">
-          <img src="../../images/menu4.png" alt />
+          <img src="../../images/menu4.png" />
           <div class="mui-media-body">留言反馈</div>
         </a>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
         <a href="#">
-          <img src="../../images/menu5.png" alt />
+          <img src="../../images/menu5.png" />
           <div class="mui-media-body">视频专区</div>
         </a>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
         <a href="#">
-          <img src="../../images/menu6.png" alt />
+          <img src="../../images/menu6.png" />
           <div class="mui-media-body">联系我们</div>
         </a>
       </li>
@@ -51,6 +48,8 @@
 
 <script>
 import { Toast } from "mint-ui";
+// 导入 轮播图 子组件
+import lunbotu from "../subcomponents/lunbotu.vue";
 
 export default {
   data() {
@@ -63,46 +62,28 @@ export default {
   },
   methods: {
     getlunbo() {
-      this.$http
-        .get("../../json/lunbotu.json")
-        .then(res => {
-          if (res.body.code === 200) {
-            // 请求成功
-            this.lunbotuList = res.body.data;
-            // console.log(res.body.data);
-            // Toast("加载轮播图ok");
-          } else {
-            // 请求失败
-            Toast("加载轮播图失败");
-          }
-        });
+      this.$http.get("../../json/lunbotu.json").then(res => {
+        if (res.body.code === 200) {
+          // 请求成功
+          this.lunbotuList = res.body.data;
+          // console.log(res.body.data);
+          // Toast("加载轮播图ok");
+        } else {
+          // 请求失败
+          Toast("加载轮播图失败");
+        }
+      });
     }
+  },
+  // 在 vm 实例上注册轮播图子组件
+  components: {
+    "lunbotu-box": lunbotu
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.mint-swipe {
-  height: 200px;
-  /* 轮播图 */
-  .mint-swipe-item {
-    /* & 交集选择器 */
-    &:nth-child(1) {
-      background-color: red;
-    }
-    &:nth-child(2) {
-      background-color: blue;
-    }
-    &:nth-child(3) {
-      background-color: yellowgreen;
-    }
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
-}
-
+// 六宫格
 .mui-grid-view.mui-grid-9 {
   background-color: #fff;
   img {
@@ -116,5 +97,6 @@ export default {
 
 .mui-grid-view.mui-grid-9 .mui-table-view-cell {
   border-color: white;
+  width: 33%;
 }
 </style>

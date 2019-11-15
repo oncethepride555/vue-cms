@@ -1,0 +1,9 @@
+{
+    "status":0,
+    "message":[
+        {
+            "title":"小米小米小米",
+            "content":"<p>&nbsp;&nbsp;&nbsp;&nbsp;this.$route 是路由【参数对象】，所有路由中的参数，params,query 都属于它this.$router 是路由【导航对象】，用它可以通过 js 代码，实现路由的 前进 后退  跳转到新的 URL 地址<img src='images/menu1.png'><img src='images/menu2.png'></p>"
+        }
+    ]
+}

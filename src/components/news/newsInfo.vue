@@ -1,4 +1,5 @@
 <template>
+<!-- 首页点击新闻咨询，展示咨询列表，点击其中某一条咨询，进入该详情页面 -->
     <div class="newinfo-container">
         <!-- 大标题 -->
         <h4 class="title">{{ newsInfo.title }}</h4>
@@ -37,7 +38,7 @@ export default {
             this.$http.get('json/picture_info_detail.json').then(res => {
                 if(res.body.status === 0){
                     this.newsInfo = res.body.message[0];
-                    console.log(res.body.message[0])
+                    // console.log(res.body.message[0])
                 }else{
                     Toast('加载失败');
                 }
