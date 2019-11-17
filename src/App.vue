@@ -2,9 +2,9 @@
   <div class="app-container">
     <!-- Header Mnit-UI 中的 Header 组件-->
     <mt-header fixed title="Vue项目">
-      <router-link to="/" slot="left">
-        <mt-button icon="back">返回</mt-button>
-      </router-link>
+      <span slot="left">
+        <mt-button icon="back" @click="goBack" v-show="flag">返回</mt-button>
+      </span>
     </mt-header>
     <!-- Body -->
     <!-- 这一部分是一直在变换的，根据路由匹配规则来展示相应的组件 -->
@@ -36,7 +36,31 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      flag: false
+    };
+  },
+  created() {
+    this.flag = this.$route.path === "/home" ? false : true;
+  },
+  methods: {
+    goBack() {
+      this.$router.go(-1);
+    }
+  },
+  watch: {
+    // 监听路径的改变
+    "$route.path": function(newVal) {
+      if (newVal === "/home") {
+        this.flag = false;
+      } else {
+        this.flag = true;
+      }
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
