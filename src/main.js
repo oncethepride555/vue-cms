@@ -55,8 +55,8 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 // main.js 是一开始就加载的
-// 从 localStorage 中取得 cart 字符串，并转为数组
-var cart = JSON.parse(localStorage.getItem('cart')) || [];
+// 从 localStorage 中取得 cart 字符串，并转为数组，如果 localStorage 中没有，则让cart 为一个空数组
+var cart = JSON.parse(localStorage.getItem('cart') || '[]');
 
 const store = new Vuex.Store({
     state: {
@@ -78,7 +78,37 @@ const store = new Vuex.Store({
             if (!flag) {
                 state.cart.push(goodsInfo)
             }
-            console.log(state.cart)
+            // console.log(state.cart)
+            // 将 cart 数组以字符串的形式存放到 localStorage
+            localStorage.setItem('cart', JSON.stringify(state.cart))
+        },
+        updateCart(state, goodsInfo) {
+            state.cart.some(item => {
+                if (item.id == goodsInfo.id) {
+                    item.count = goodsInfo.num
+                    return;
+                }
+            });
+            // 将 cart 数组以字符串的形式存放到 localStorage
+            localStorage.setItem('cart', JSON.stringify(state.cart))
+        },
+        removeCart(state, id) {
+            state.cart.some((item, i) => {
+                if (item.id == id) {
+                    state.cart.splice(i, 1)
+                }
+            })
+            // 将 cart 数组以字符串的形式存放到 localStorage
+            localStorage.setItem('cart', JSON.stringify(state.cart))
+        },
+        selectedChange(state, obj) {
+            state.cart.some(item => {
+                if (item.id == obj.id) {
+                    item.isSelected = obj.isSelected;
+                }
+            })
+            // 将 cart 数组以字符串的形式存放到 localStorage
+            localStorage.setItem('cart', JSON.stringify(state.cart))
         }
     },
     getters: {
@@ -89,6 +119,26 @@ const store = new Vuex.Store({
                 c += item.count;
             })
             return c;
+        },
+        // 购物车中选中的商品数量
+        getSelectNum(state) {
+            var n = 0;
+            state.cart.forEach(item => {
+                if (item.isSelected == true) {
+                    n++;
+                }
+            })
+            return n;
+        },
+        // 计算选中商品的总价
+        getAllPrice(state) {
+            var allPrice = 0;
+            state.cart.forEach(item => {
+                if (item.isSelected) {
+                    allPrice += item.count * item.price;
+                }
+            })
+            return allPrice;
         }
     }
 })

@@ -82,10 +82,15 @@ export default {
     getInfo() {
       // 获取商品信息
       // console.log('getInfo方法的开头')
-      this.$http.get("../../json/goods_info.json").then(res => {
+      this.$http.get("../../json/goods.json").then(res => {
         // console.log('getInfo方法中的.then方法中')
         if (res.body.status === 0) {
-          this.goodsInfo = res.body.message[0];
+          // this.goodsInfo = res.body.message[0];
+          res.body.message.some(item => {
+            if(item.id == this.id){
+              this.goodsInfo = item;
+            }
+          })
         }
       });
       // console.log('getInfo方法的结尾')
@@ -112,8 +117,6 @@ export default {
       };
       // 通过调用 mutations 中的方法，将 商品信息对象 放到 store 的 cart 数组中
       this.$store.commit("addToCart", goodsInfo);
-      // 将 cart 数组以字符串的形式存放到 localStorage
-      localStorage.setItem('cart',JSON.stringify(this.$store.state.cart))
     },
     beforeEnter(el) {
       el.style.transform = "translate(0,0)";

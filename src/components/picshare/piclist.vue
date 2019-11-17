@@ -50,7 +50,7 @@ export default {
             item.w = 300;
           });
           this.list = res.body.message;
-          console.log(res.body.message);
+          // console.log(res.body.message);
         }
       });
     },

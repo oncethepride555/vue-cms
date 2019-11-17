@@ -1,7 +1,11 @@
 <template>
   <div class="app-container">
     <!-- Header Mnit-UI 中的 Header 组件-->
-    <mt-header fixed title="固定在顶部"></mt-header>
+    <mt-header fixed title="Vue项目">
+      <router-link to="/" slot="left">
+        <mt-button icon="back">返回</mt-button>
+      </router-link>
+    </mt-header>
     <!-- Body -->
     <!-- 这一部分是一直在变换的，根据路由匹配规则来展示相应的组件 -->
     <transition>
@@ -44,47 +48,48 @@ export default {};
 .mui-bar {
   background-color: white;
 }
-.v-enter{
+.v-enter {
   opacity: 0;
   transform: translateX(100%);
 }
 // 从右侧进入，从左侧离开
-.v-leave-to{
+.v-leave-to {
   opacity: 0;
   transform: translateX(-100%);
   position: absolute; //可以解决从左侧进入的元素上浮的问题
 }
-.v-enter-active,.v-leave-active{
+.v-enter-active,
+.v-leave-active {
   transition: all 0.8s ease;
 }
 .mui-bar-tab .mui-tab-item-wss.mui-active {
-    color: #007aff;
+  color: #007aff;
 }
 .mui-bar-tab .mui-tab-item-wss {
-    display: table-cell;
-    overflow: hidden;
-    width: 1%;
-    height: 50px;
-    text-align: center;
-    vertical-align: middle;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    color: #929292;
+  display: table-cell;
+  overflow: hidden;
+  width: 1%;
+  height: 50px;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #929292;
 }
 .mui-bar-tab .mui-tab-item-wss .mui-icon {
-    top: 3px;
-    width: 24px;
-    height: 24px;
-    padding-top: 0;
-    padding-bottom: 0;
+  top: 3px;
+  width: 24px;
+  height: 24px;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 .mui-bar-tab .mui-tab-item-wss .mui-icon ~ .mui-tab-label {
-    font-size: 11px;
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  font-size: 11px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.mint-header{
+.mint-header {
   z-index: 99;
 }
 </style>
