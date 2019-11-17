@@ -39,7 +39,7 @@ Vue.use(VueResource)
 // 导入格式化时间的插件
 import moment from 'moment'
 // 定义全局的过滤器
-Vue.filter('dateFormat',function(dataStr,pattern="YYYY-MM-DD HH:mm:ss"){
+Vue.filter('dateFormat', function (dataStr, pattern = "YYYY-MM-DD HH:mm:ss") {
     return moment(dataStr).format(pattern)
 })
 
@@ -50,8 +50,52 @@ Vue.http.options.emulateJSON = true;
 import VuePreview from 'vue-preview'
 Vue.use(VuePreview)
 
+// 导入 vuex
+import Vuex from 'vuex'
+Vue.use(Vuex)
+
+// main.js 是一开始就加载的
+// 从 localStorage 中取得 cart 字符串，并转为数组
+var cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+const store = new Vuex.Store({
+    state: {
+        cart: cart // 购物车数组，放每一次加入购物车的商品信息对象
+    },
+    mutations: {
+        addToCart(state, goodsInfo) {
+            // 默认 购物车中没有即将要加入的商品
+            var flag = false;
+            // 购物车中已经有相同的商品
+            state.cart.some(item => {
+                if (item.id == goodsInfo.id) {
+                    item.count += parseInt(goodsInfo.count)
+                    flag = true
+                    return true
+                }
+            })
+            // 购物车中没有即将要加入的商品
+            if (!flag) {
+                state.cart.push(goodsInfo)
+            }
+            console.log(state.cart)
+        }
+    },
+    getters: {
+        // 计算加入购物车的商品总数量
+        getCount(state) {
+            var c = 0;
+            state.cart.forEach(item => {
+                c += item.count;
+            })
+            return c;
+        }
+    }
+})
+
 var vm = new Vue({
     el: '#app',
     render: c => c(app),
-    router // 1.4.挂载路由对象到 vm 实例上
+    router, // 1.4.挂载路由对象到 vm 实例上
+    store
 })

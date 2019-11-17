@@ -1,4 +1,5 @@
 <template>
+<!-- 点击首页的 商品购买 进入的 商品列表页面 -->
   <div class="goods-list">
       <!-- 页面跳转两种方式：1.router-link 2.编程式导航 -->
     <div class="goods-item" v-for="item in goods" :key="item.id" @click="goToDetail(item.id)">

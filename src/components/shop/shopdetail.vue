@@ -1,4 +1,5 @@
 <template>
+  <!-- 从 商品列表 页面进入的 商品详情页 -->
   <div class="shop-detail">
     <!-- 小球 -->
     <transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter">
@@ -24,7 +25,7 @@
       </p>
       <div class="num">
         购买数量:
-        <!-- 数字选择框组件 -->
+        <!-- MUI 中的数字选择框组件  -->
         <!-- numberbox 中的 goodsInfo 是异步获取的，当把 numberbox 渲染到页面的时候，goodsInfo 还没有拿到 -->
         <numberbox @numChange="numChange" :max="goodsInfo.stock_quantity"></numberbox>
       </div>
@@ -49,15 +50,16 @@
 // 导入 轮播图 子组件
 import lunbotu from "../subcomponents/lunbotu.vue";
 import numberbox from "../subcomponents/goodsinfo_numbox.vue";
+import goodsinfo_numboxVue from "../subcomponents/goodsinfo_numbox.vue";
 
 export default {
   data() {
     return {
-      lunbotuList: [], //详情页轮播图数组
-      goodsInfo: {},
-      id: this.$route.params.id,
-      ballFlag: false,
-      numVal:1
+      lunbotuList: [], // 详情页轮播图数组
+      goodsInfo: {}, // 从后端接口得到的商品信息对象
+      id: this.$route.params.id, // 商品id
+      ballFlag: false, // 指示小球显示隐藏
+      numVal: 1 // 选择的商品数量，数字选择框中的值
     };
   },
   created() {
@@ -77,7 +79,8 @@ export default {
         }
       });
     },
-    getInfo() { // 获取商品信息
+    getInfo() {
+      // 获取商品信息
       // console.log('getInfo方法的开头')
       this.$http.get("../../json/goods_info.json").then(res => {
         // console.log('getInfo方法中的.then方法中')
@@ -96,8 +99,21 @@ export default {
       this.$router.push({ name: "photodetail", params: { id } });
     },
     addShopCart() {
+      // 点击 加入购物车，触发的方法
       // 点击加入购物车，小球从无到有
       this.ballFlag = !this.ballFlag;
+
+      // 得到一个 goodsInfo 对象，包含要加入购物车的 【 商品id、数量、商品单价、在购物车中是否选中】
+      var goodsInfo = {
+        id: this.id,
+        count: this.numVal,
+        price: this.goodsInfo.sell_price,
+        isSelected: true
+      };
+      // 通过调用 mutations 中的方法，将 商品信息对象 放到 store 的 cart 数组中
+      this.$store.commit("addToCart", goodsInfo);
+      // 将 cart 数组以字符串的形式存放到 localStorage
+      localStorage.setItem('cart',JSON.stringify(this.$store.state.cart))
     },
     beforeEnter(el) {
       el.style.transform = "translate(0,0)";
@@ -119,9 +135,9 @@ export default {
     afterEnter(el) {
       // 小球移动到购物车徽标的位置后消失
       this.ballFlag = !this.ballFlag;
-    }
-    ,
-    numChange(value){ // 子组件调用了这个方法，实参为 this.$refs.input.value，即文本框中的值
+    },
+    numChange(value) {
+      // 子组件调用了这个方法，实参为 this.$refs.input.value，即文本框中的值
       this.numVal = value;
       console.log(this.numVal);
     }
@@ -129,7 +145,7 @@ export default {
   // 注册子组件
   components: {
     "lunbotu-box": lunbotu,
-    "numberbox": numberbox
+    numberbox: numberbox
   }
 };
 </script>
