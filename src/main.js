@@ -22,7 +22,7 @@ Vue.use(MintUI)
 import 'mint-ui/lib/style.css'
 
 // 导入 App 根组件
-import app from './App.vue'
+import App from './App.vue'
 
 // 导入样式文件
 import './lib/mui/css/mui.css'
@@ -145,7 +145,7 @@ const store = new Vuex.Store({
 
 var vm = new Vue({
     el: '#app',
-    render: c => c(app),
+    render: c => c(App),
     router, // 1.4.挂载路由对象到 vm 实例上
     store
 })
