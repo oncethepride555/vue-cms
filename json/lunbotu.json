@@ -1,0 +1,23 @@
+{
+	"code": 200,
+	"data": [
+		{
+			"image": "../../images/menu1.png"
+		},
+		{
+			"image": "../../images/menu2.png"
+		},
+		{
+			"image": "../../images/menu3.png"
+		},
+		{
+			"image": "../../images/menu4.png"
+		},
+		{
+			"image": "../../images/menu5.png"
+		},
+		{
+			"image": "../../images/menu6.png"
+		}
+	]
+}
