@@ -145,7 +145,7 @@ const store = new Vuex.Store({
 
 var vm = new Vue({
     el: '#app',
-    render: c => c(App),
+    render: h => h(App), // vue2.0新增的函数，可以直接给绑定的节点渲染一个vue组件
     router, // 1.4.挂载路由对象到 vm 实例上
     store
 })
